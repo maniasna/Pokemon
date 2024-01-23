@@ -1,23 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
+import logo from './img/logo.png';
+import { useState, useEffect } from 'react';
+import * as API from './services/pokemon';
+import { Routes, Route } from 'react-router-dom';
+import Pokedex from './componentes/pokedex';
+import Mapa from './componentes/mapa';
 
 function App() {
+  const [pokemon, setPokemon] = useState([])
+  useEffect(() => {
+    API.getPokemons().then(setPokemon);
+  }, [])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <img className='centrado' src={logo} />
+      <Routes>
+        <Route path='/pokedex' element={<Pokedex />} />
+        <Route path='/mapa' element={<Mapa />} />
+      </Routes>
     </div>
   );
 }
